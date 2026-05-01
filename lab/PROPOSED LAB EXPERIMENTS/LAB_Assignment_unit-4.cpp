@@ -37,37 +37,37 @@
 //Lab Experiment 17: Sensor Execution Profiling
 
 
-// #include <iostream>
-// #include <chrono>
-// #include <thread>
+#include <iostream>
+#include <chrono>
+#include <thread>
 
-// // Use the namespace to simplify calls if the IDE is confused
-// using namespace std;
-// using namespace std::chrono;
+// Use the namespace to simplify calls if the IDE is confused
+using namespace std;
+using namespace std::chrono;
 
-// void readSensor() {
-//     // Simulate sensor delay (e.g., I2C communication)
-//     // If this_thread still shows an error, ensure you are compiling with -std=c++11 or higher
-//    // this_thread::sleep_for(milliseconds(15));
-// }
+void readSensor() {
+    // Simulate sensor delay (e.g., I2C communication)
+    // If this_thread still shows an error, ensure you are compiling with -std=c++11 or higher
+   // this_thread::sleep_for(milliseconds(15));
+}
 
-// int main() {
-//     // 1. Capture start time
-//     high_resolution_clock::time_point start = high_resolution_clock::now();
+int main() {
+    // 1. Capture start time
+    high_resolution_clock::time_point start = high_resolution_clock::now();
 
-//     // 2. Execute the function to be profiled
-//     readSensor();
+    // 2. Execute the function to be profiled
+    readSensor();
 
-//     // 3. Capture end time
-//     high_resolution_clock::time_point end = high_resolution_clock::now();
+    // 3. Capture end time
+    high_resolution_clock::time_point end = high_resolution_clock::now();
 
-//     // 4. Calculate duration
-//     auto duration = duration_cast<microseconds>(end - start);
+    // 4. Calculate duration
+    auto duration = duration_cast<microseconds>(end - start);
 
-//     cout << "Sensor Execution Time: " << duration.count() << " microseconds" << endl;
+    cout << "Sensor Execution Time: " << duration.count() << " microseconds" << endl;
 
-//     return 0;
-// }
+    return 0;
+}
 
 
 // // //Lab Experiment 18: Data Serialization
@@ -101,63 +101,59 @@
 // }
 
 
-//Lab Experiment 19 & 20: Real-Time Control Loop & Analysis
+// //Lab Experiment 19 & 20: Real-Time Control Loop & Analysis
+// #include <iostream>
+// #include <chrono>
+// #include <thread>
+// #include <vector>
 
+// using namespace std;
+// using namespace std::chrono;
 
+// // If std::this_thread is still red, ensure your compiler flags include -std=c++11
+// // and -pthread if you are on a Linux-based system.
 
-
-#include <iostream>
-#include <chrono>
-#include <thread>
-#include <vector>
-
-using namespace std;
-using namespace std::chrono;
-
-// If std::this_thread is still red, ensure your compiler flags include -std=c++11
-// and -pthread if you are on a Linux-based system.
-
-int main() {
-    const int frequency_hz = 10;
-    const milliseconds interval(1000 / frequency_hz);
-    const int total_cycles = 20;
+// int main() {
+//     const int frequency_hz = 10;
+//     const milliseconds interval(1000 / frequency_hz);
+//     const int total_cycles = 20;
     
-    vector<long long> latencies;
-    int deadline_misses = 0;
+//     vector<long long> latencies;
+//     int deadline_misses = 0;
 
-    // Use steady_clock for monotonic time (essential for real-time loops)
-    auto next_tick = steady_clock::now();
+//     // Use steady_clock for monotonic time (essential for real-time loops)
+//     auto next_tick = steady_clock::now();
 
-    for (int i = 0; i < total_cycles; ++i) {
-        auto loop_start = steady_clock::now();
+//     for (int i = 0; i < total_cycles; ++i) {
+//         auto loop_start = steady_clock::now();
 
-        // --- Simulated Robotic Task ---
-        // Replacing this_thread::sleep_for with a manual wait if needed
-        // this_thread::sleep_for(milliseconds(20)); 
-        // ------------------------------
+//         // --- Simulated Robotic Task ---
+//         // Replacing this_thread::sleep_for with a manual wait if needed
+//         // this_thread::sleep_for(milliseconds(20)); 
+//         // ------------------------------
 
-        auto loop_end = steady_clock::now();
-        auto actual_work_time = duration_cast<milliseconds>(loop_end - loop_start).count();
-        latencies.push_back(actual_work_time);
+//         auto loop_end = steady_clock::now();
+//         auto actual_work_time = duration_cast<milliseconds>(loop_end - loop_start).count();
+//         latencies.push_back(actual_work_time);
 
-        // Check if the work exceeded the allowed time frame (Exp 20)
-        if (actual_work_time > interval.count()) {
-            deadline_misses++;
-        }
+//         // Check if the work exceeded the allowed time frame (Exp 20)
+//         if (actual_work_time > interval.count()) {
+//             deadline_misses++;
+//         }
 
-        // Enforcement: Wait until the next precise interval
-        next_tick += interval;
+//         // Enforcement: Wait until the next precise interval
+//         next_tick += interval;
         
-        // This ensures the loop triggers at exactly 100ms, 200ms, etc.
-        // this_thread::sleep_until(next_tick);
-    }
+//         // This ensures the loop triggers at exactly 100ms, 200ms, etc.
+//         // this_thread::sleep_until(next_tick);
+//     }
 
-    // Timing Analysis Report (Exp 20)
-    cout << "\n--- Timing Analysis Report ---" << endl;
-    cout << "Total Cycles:    " << total_cycles << endl;
-    cout << "Deadline Misses: " << deadline_misses << endl;
-    cout << "Target Interval: " << interval.count() << "ms" << endl;
-    cout << "Safety Status:   " << (deadline_misses == 0 ? "PASSED" : "CRITICAL") << endl;
+//     // Timing Analysis Report (Exp 20)
+//     cout << "\n--- Timing Analysis Report ---" << endl;
+//     cout << "Total Cycles:    " << total_cycles << endl;
+//     cout << "Deadline Misses: " << deadline_misses << endl;
+//     cout << "Target Interval: " << interval.count() << "ms" << endl;
+//     cout << "Safety Status:   " << (deadline_misses == 0 ? "PASSED" : "CRITICAL") << endl;
 
-    return 0;
-}
+//     return 0;
+// }
